@@ -24,8 +24,10 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
+import time
 
 continue_reading = True
+no_tag = True
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
@@ -54,24 +56,11 @@ while continue_reading:
 
     # If we have the UID, continue
     if status == MIFAREReader.MI_OK:
-
-        # Print UID
-        print ''.join('{:02x}:'.format(a) for a in uid)
-        #print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
-    
-        # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+        no_tag = False
+        print ':'.join('{:02x}'.format(a) for a in uid)
+    else:
+        print ''
+        no_tag = True
         
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
-
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
-        else:
-            print "Authentication error"
+    time.sleep
 
