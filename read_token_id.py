@@ -29,6 +29,7 @@ import time
 continue_reading = True
 no_tag = True
 last_token = ''
+flag = 0
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
@@ -47,10 +48,6 @@ while continue_reading:
     
     # Scan for cards    
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-
-    # If a card is found
-    # if status == MIFAREReader.MI_OK:
-    #     print "Card detected"
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
@@ -59,16 +56,19 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
         token = ':'.join('{:02x}'.format(a) for a in uid)
         no_tag = False
+        flag = 0
         if last_token != token:
             last_token = token
             print token
     else:
-        if no_tag == False and len(last_token) != 0:
-            pass
-        else:
-            no_tag = true
+        if no_tag == False and len(last_token) != 0 and flag == 0:
+            flag = flag + 1
+        elif no_tag == False:
+            no_tag = True
             last_token = ''
             print ''        
 
     time.sleep
+
+    
 
