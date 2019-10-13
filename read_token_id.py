@@ -60,10 +60,12 @@ while continue_reading:
         token = ':'.join('{:02x}'.format(a) for a in uid)
         no_tag = False
         if last_token != token:
-            print token 
-        break
+            print token
+    elif no_tag == False and len(last_token) == 0 and status == MIFAREReader.MI_ERR:
+        pass 
     elif no_tag == False:
         print ''
+        last_token = ''
         no_tag = True
 
     time.sleep
