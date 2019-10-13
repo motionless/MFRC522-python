@@ -58,9 +58,9 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
         no_tag = False
         print ':'.join('{:02x}'.format(a) for a in uid)
-    else:
+    elif no_tag == False:
         print ''
         no_tag = True
-        
+
     time.sleep
 
