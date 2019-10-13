@@ -28,6 +28,7 @@ import time
 
 continue_reading = True
 no_tag = True
+last_token = ''
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
@@ -56,8 +57,11 @@ while continue_reading:
 
     # If we have the UID, continue
     if status == MIFAREReader.MI_OK:
+        token = ':'.join('{:02x}'.format(a) for a in uid)
         no_tag = False
-        print ':'.join('{:02x}'.format(a) for a in uid)
+        if last_token != token:
+            print token 
+        break
     elif no_tag == False:
         print ''
         no_tag = True
