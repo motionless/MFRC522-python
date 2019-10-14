@@ -37,6 +37,14 @@ def end_read(signal,frame):
     continue_reading = False
     GPIO.cleanup()
 
+token_command = {
+                "3d:99:38:62:fe": "reset", 
+                "ac:26:f3:15:6c": "forward",
+                "80:46:a0:90:f6": "right",
+                "1c:3a:f2:15:c1": "left",
+                "cc:e5:f2:15:ce": "flush"
+                }
+
 # Hook the SIGINT
 signal.signal(signal.SIGINT, end_read)
 
@@ -59,7 +67,7 @@ while continue_reading:
         flag = 0
         if last_token != token:
             last_token = token
-            print token
+            print token_command[token]
     else:
         if no_tag == False and len(last_token) != 0 and flag == 0:
             flag = flag + 1
