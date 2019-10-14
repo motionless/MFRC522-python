@@ -25,6 +25,7 @@ import RPi.GPIO as GPIO
 import MFRC522
 import signal
 import time
+import sys
 
 continue_reading = True
 no_tag = True
@@ -68,6 +69,8 @@ while continue_reading:
         if last_token != token:
             last_token = token
             print token_command[token]
+            sys.stdout.flush()
+
     else:
         if no_tag == False and len(last_token) != 0 and flag == 0:
             flag = flag + 1
@@ -76,7 +79,7 @@ while continue_reading:
             last_token = ''
             print ''        
 
-    time.sleep
+    time.sleep(0.2)
 
     
 
