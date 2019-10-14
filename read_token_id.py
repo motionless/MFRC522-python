@@ -44,6 +44,10 @@ token_command = {
                 "80:46:a0:90:f6": "right",
                 "1c:3a:f2:15:c1": "left",
                 "cc:e5:f2:15:ce": "flush"
+                "2c:7f:f0:15:b6": "x2",
+                "5c:9d:ef:15:3b": "x3",
+                "fc:20:f3:15:3a": "x5",
+                "8c:10:f1:15:78": "x8"
                 }
 
 # Hook the SIGINT
